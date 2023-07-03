@@ -1,6 +1,71 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Next Auth - Github & Credentials Example
 
-## Getting Started
+The purpose of this project is to demonstrate how to integrate NextAuth.js into your application and utilize various credential providers for authentication. It showcases the setup and configuration process for the following providers:
+
+- Github Provider
+- Credentials Provider
+
+For any extra info refer to: [NextAuth.js Documentation](ht.tps://next-auth.js.org/getting-started/introduction)
+
+## Providers Setup
+
+### Github Provider
+
+You will need to create a new Github application by going here : [github.com/settings/applications/new](https://github.com/settings/applications/new)
+
+After you create a new app you will have to:
+
+1. Go to [github.com/settings/developers](https://github.com/settings/developers).
+2. On the right side click on `OAuth Apps`
+3. Select the app you created
+4. Copy the `Client ID` and save it.
+5. Generate a new `Client Secret` and save it.
+
+Now rename the file `.env.example` to `.env.local` and paste your `Client ID` and ``Client Secret` to their respective variables.
+
+### Credentials Provider
+
+Credentials provider doesn't really need any settings all you need to do is go to `src/configs/next-auth.ts` and implement your authentication with your database:
+
+```ts
+CredentialsProvider({
+      name: "Credentials",
+      credentials: {
+        username: {
+          label: "Username",
+          type: "text",
+          placeholder: "Enter username",
+        },
+        password: { label: "Password", type: "password" },
+      },
+      async authorize(credentials) {
+        // Validate credentials with your database here and return the user object
+        const user = {
+          id: "1",
+          name: "Admin",
+          email: "admin@example.com",
+          image: "https://avatars.githubusercontent.com/u/80968727?v=4",
+          username: "admin",
+          password: "admin",
+        };
+
+        if (
+          credentials?.username == user.username &&
+          credentials.password == user.password
+        ) {
+          return user;
+        } else {
+          return null;
+        }
+      },
+    }),
+```
+
+## Running The Server
+
+**Note** : Don't forget to set your `JWT_SECRET` and `AUTH_SECRET` in `.env.local`. 
+
+As for `NEXTAUTH_URL` you can refer to [NextAuth.js Configuration Documentation](https://next-auth.js.org/configuration/options#nextauth_url).
 
 First, run the development server:
 
