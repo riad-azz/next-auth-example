@@ -11,7 +11,11 @@ For any extra info refer to: [NextAuth.js Documentation](ht.tps://next-auth.js.o
 
 ### Github Provider
 
-You will need to create a new Github application by going here : [github.com/settings/applications/new](https://github.com/settings/applications/new)
+You will need to create a new Github application by going here : [github.com/settings/applications/new](https://github.com/settings/applications/new).
+
+And you **must** set `Authorization callback URL` to `http://localhost:3000/api/auth/callback/github`. In production change `localhost:3000` to your domain name.
+
+As foe the `Application name` and `Homepage URL`..etc you can set them to whatever you like.
 
 After you create a new app you will have to:
 
